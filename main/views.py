@@ -11,6 +11,7 @@ import string
 from captcha.image import ImageCaptcha
 from django.conf import settings
 import os
+from django.contrib.auth import get_user_model
 
 def index(request):
     return render(request, 'index.html')
@@ -67,9 +68,16 @@ def login_view(request):
         user_login = request.POST['login']
         password = request.POST['password']
 
-        user = authenticate(request, login=user_login, password=password)
+        User = get_user_model()  # Получаем модель пользователя
+        try:
+            user = User.objects.get(login=user_login)  # Ищем пользователя по логину
+        except User.DoesNotExist:
+            messages.error(request, 'Неверные логин или пароль')
+            login_attempts += 1
+            request.session['login_attempts'] = login_attempts
+            return render(request, 'login.html', {'show_captcha_modal': False})
 
-        if user is not None:
+        if user.check_password(password):  # Проверяем пароль
             login(request, user)
             messages.success(request, 'Вы успешно вошли в систему!')
             request.session['login_attempts'] = 0  # Сброс счетчика попыток
@@ -87,8 +95,6 @@ def login_view(request):
                 })
 
     return render(request, 'login.html', {'show_captcha_modal': False})
-
-
 
 def captcha_view(request):
     if request.method == 'POST':
@@ -117,3 +123,15 @@ def generate_captcha(request):
     image.write(captcha_text, image_path)
 
     return settings.STATIC_URL + 'captcha/' + image_name
+
+@login_required
+def profile_view(request):
+    # Сообщение об успешном входе
+    messages.success(request, f'Добро пожаловать, {request.user.login}!')
+
+    return render(request, 'profile.html')
+
+def logout_view(request):
+    logout(request)
+    messages.info(request, f'Вы вышли из аккаунта.') 
+    return redirect('home')

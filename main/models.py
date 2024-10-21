@@ -28,6 +28,8 @@ class UserManager(BaseUserManager):
             password=password,
         )
         user.is_admin = True
+        user.is_staff = True
+        user.is_active = True
         user.save(using=self._db)
         return user
 
@@ -38,7 +40,8 @@ class User(AbstractBaseUser):
     password = models.CharField(max_length=128)
     is_confirmed = models.BooleanField(default=False)
     confirmation_token = models.CharField(max_length=128, null=True, blank=True)
-
+    is_staff = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
     objects = UserManager()
 
     USERNAME_FIELD = 'login'
@@ -46,6 +49,12 @@ class User(AbstractBaseUser):
 
     def __str__(self):
         return f'<User {self.id}>'
+
+    def has_perm(self, perm, obj=None):
+        return True
+
+    def has_module_perms(self, app_label):
+        return True
 
     def set_password(self, password):
         self.password = make_password(password)
