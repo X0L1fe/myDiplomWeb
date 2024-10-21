@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <!-- Подключаем toastr -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    
+    {% load static %}
+    <link rel="icon" href="{% static 'image/web-icon.png' %}">
+    <title>𝗖𝗼𝗻𝘀𝘁𝗖𝗿𝗮𝗻𝗲​ | {% block title %}{% endblock %}</title>
+    
+    {%block links%}
+    {%endblock%}
+</head>
+
+<body>
+    {% block body %}
+    {% endblock %}
+</body>
+<script>
+    $(document).ready(function () {
+        {% if messages %}
+        {% for message in messages %}
+        toastr["{{ message.tags }}"]("{{ message }}");
+        {% endfor %}
+        {% endif %}
+
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": true,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
+    });
+</script>
+
+</html>

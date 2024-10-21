@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block links %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "../static/libs/three.module.min.js",
+    "GLTFLoader": "../static/libs/GLTFLoader.js",
+    "OrbitControls": "../static/libs/OrbitControls.js",
+    "BufferGeometryUtils": "../static/libs/BufferGeometryUtils.js"
+  }
+}
+</script>
+
+<script src="{% static 'js/main.js' %}" type="module"></script>
+{% endblock %}
+
+{% block title %}Главная{% endblock %}
+
+{% block body %}
+<p>Безусловно, внедрение современных методик играет важную роль в формировании стандартных подходов...</p>
+
+<div id="container"></div>
+{% endblock %}

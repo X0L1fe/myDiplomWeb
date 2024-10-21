@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{%block links%}
+{% load static %}
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+<script type="text/javascript" src="{% static 'js/captcha-modal.js' %}"></script>"
+
+<link rel="stylesheet" href="{% static 'css/forms.css' %}">
+{%endblock%}
+{% block title %}Авторизация{% endblock %}
+
+{% block body %}
+<section>
+    <div class="form-box">
+        <div class="form-value">
+            <div class="page" id="logining">
+                <form action="{% url 'logining' %}" method="post" id="log">
+                    {% csrf_token %}
+                    <h2>Авторизация</h2>
+                    <div class="inputbox">
+                        <ion-icon name="person-outline"></ion-icon>
+                        <input id="login" name="login" type="text" value="{{ login }}" required>
+                        <label for="login">Логин:</label>
+                        
+                    </div>
+                    <div class="inputbox">
+                        <ion-icon name="lock-closed-outline"></ion-icon>
+                        <input id="password" name="password" type="password" value="{{ password }}" required>
+                        <label for="password">Пароль:</label>
+                    </div>
+                    <button name="button">Авторизироваться</button>
+                    <div class="register">
+                        <p>Нет аккаунта?<a href="{% url 'register' %}"> Регистрация</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div id="captchaModal" class="modal" style="display: {% if show_captcha_modal %}block{% else %}none{% endif %};">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Подтверждение капчи</h2>
+        <form method="POST" action="{% url 'captcha' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="captcha_image">Введите текст с изображения:</label>
+                {% if captcha_image_url %}
+                    <img src="{{ captcha_image_url }}" alt="Captcha Image" id="captcha_image">
+                {% else %}
+                    <p>Не удалось загрузить изображение капчи. Проверьте настройки.</p>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <input type="text" name="captcha_input" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Подтвердить</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
