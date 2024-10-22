@@ -6,11 +6,13 @@
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-    <!-- Подключаем toastr -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    
     
     {% load static %}
+    <!-- Подключаем toastr -->
+    <link rel="stylesheet" href="{% static 'css/toastr-for-me.css' %}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
     <link rel="icon" href="{% static 'image/web-icon.png' %}">
     <title>𝗖𝗼𝗻𝘀𝘁𝗖𝗿𝗮𝗻𝗲​ | {% block title %}{% endblock %}</title>
     

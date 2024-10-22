@@ -19,9 +19,13 @@ def about(request):
     return render(request, 'about.html')
 
 def register(request):
+    if request.user.is_authenticated:
+        return redirect('profile')
     return render(request, 'register.html')
 
 def register_view(request):
+    if request.user.is_authenticated:
+        return redirect('profile')
     if request.method == 'POST':
         user_login = request.POST['login']
         email = request.POST['email']
@@ -53,10 +57,13 @@ def register_view(request):
     return render(request, 'register.html')
 
 def loginer(request):
+    if request.user.is_authenticated:
+        return redirect('profile')
     return render(request, 'login.html')
 
-@login_required(login_url='home')
 def login_view(request):
+    if request.user.is_authenticated:
+        return redirect('profile')
     login_attempts = request.session.get('login_attempts', 0)
 
     if request.method == 'POST':

@@ -1,0 +1,30 @@
+
+.toast {
+    font-family: 'Ubuntu Mono', monospace;
+    font-size: 20px;
+
+}
+.toast-success .toast-message{
+    color: black;
+    
+}
+
+/* .toast-success{
+    background-color: #4fff2c;
+} */
+
+.toast-error{
+    background-color: rgb(209, 21, 21);
+}
+
+.toast-error .toast-message{
+    color: black;
+    
+}
+
+.toast-info .toast-message{
+    color: black;
+}
+.toast-warning .toast-message{
+    color: black;
+}

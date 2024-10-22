@@ -1,5 +1,12 @@
 {% extends 'base.html' %}
 
+
+{%block links%}
+{% load static %}
+
+{%endblock%}
+{% block title %}Профиль{% endblock %}
+
 {% block body %}
 <h1>Профиль пользователя {{ request.user.username }}</h1>
 
