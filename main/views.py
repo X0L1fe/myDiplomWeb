@@ -55,6 +55,7 @@ def register_view(request):
 def loginer(request):
     return render(request, 'login.html')
 
+@login_required(login_url='home')
 def login_view(request):
     login_attempts = request.session.get('login_attempts', 0)
 
