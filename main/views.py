@@ -18,6 +18,12 @@ def index(request):
 def about(request):
     return render(request, 'about.html')
 
+def contacts(request):
+    return render(request, 'contacts.html')
+
+def documents(request):
+    return render(request, 'documents.html')
+
 def register(request):
     if request.user.is_authenticated:
         return redirect('profile')
@@ -130,6 +136,19 @@ def profile_view(request):
     # Сообщение об успешном входе
     messages.success(request, f'Добро пожаловать, {request.user.login}!')
 
+    return render(request, 'profile.html')
+
+@login_required
+def profile_update(request):
+    if request.method == 'POST':
+        user = request.user
+        user.passport = request.POST['passport']
+        user.first_name = request.POST['firs_name']
+        user.last_name = request.POST['last_name']
+        user.middle_name = request.POST['middle_name']
+        user.phone = request.POST['phone']
+        user.save()
+        return redirect('profile')  # Перенаправляем обратно на страницу профиля
     return render(request, 'profile.html')
 
 @login_required(login_url='home')

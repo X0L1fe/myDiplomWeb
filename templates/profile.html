@@ -8,13 +8,42 @@
 {% block title %}Профиль{% endblock %}
 
 {% block body %}
-<h1>Профиль пользователя {{ request.user.username }}</h1>
+{% include 'base-menu.html' %}
+<div class="main-content">
+  <h1>Профиль пользователя {{ request.user.login }}</h1>
 
-<h2>Ваш профиль самый лучший!</h2>
+  <h6>Ваш профиль самый лучший!</h6>
 
-<form method="POST" action="{% url 'logout' %}">
-  {% csrf_token %}
-  <button type="submit">Выйти из аккаунта</button>
-</form>
+  <button id="edit-btn">Редактировать профиль</button>
 
+  <form id="profile-form" method="POST" action="{% url 'profile_update' %}" style="display:none;">
+    {% csrf_token %}
+    <label for="passport">Серия и номер паспорта:</label>
+    <input type="text" id="passport" name="passport" value="{{ request.user.passport }}" required>
+
+    <label for="first_name">Фамилия:</label>
+    <input type="text" id="first_name" name="first_name" value="{{ request.user.first_name }}" required>
+
+    <label for="last_name">Имя:</label>
+    <input type="text" id="last_name" name="last_name" value="{{ request.user.last_name }}" required>
+
+    <label for="middle_name">Отчество:</label>
+    <input type="text" id="middle_name" name="middle_name" value="{{ request.user.middle_name }}" required>
+
+    <label for="phone">Номер телефона:</label>
+    <input type="text" id="phone" name="phone" value="{{ request.user.phone }}" required>
+
+    <button type="submit">Сохранить</button>
+  </form>
+
+  <form method="POST" action="{% url 'logout' %}">
+    {% csrf_token %}
+    <button type="submit">Выйти из аккаунта</button>
+  </form>
+</div>
+<script>
+  document.getElementById('edit-btn').addEventListener('click', function() {
+    document.getElementById('profile-form').style.display = 'block';
+  });
+</script>
 {% endblock %}

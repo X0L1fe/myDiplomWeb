@@ -42,6 +42,11 @@ class User(AbstractBaseUser):
     confirmation_token = models.CharField(max_length=128, null=True, blank=True)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
+    passport = models.CharField(max_length=20, null=True, blank=True)
+    first_name = models.CharField(max_length=255, null=True, blank=True)
+    last_name = models.CharField(max_length=255, null=True, blank=True)
+    middle_name = models.CharField(max_length=255, null=True, blank=True)
+    phone = models.CharField(max_length=15, null=True, blank=True)
     objects = UserManager()
 
     USERNAME_FIELD = 'login'
