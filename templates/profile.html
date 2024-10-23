@@ -3,7 +3,9 @@
 
 {%block links%}
 {% load static %}
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
 {%endblock%}
 {% block title %}Профиль{% endblock %}
 
@@ -21,40 +23,63 @@
     <li><strong>Номер паспорта:</strong> {{ request.user.passport_number|default_if_none:"Не указано" }}</li>
     <li><strong>Номер телефона:</strong> {{ request.user.phone|default_if_none:"Не указано" }}</li>
   </ul>
+  <div class="button-submit">
+    <button id="edit-btn">Редактировать профиль</button>
+  </div>
+  <div id="modal" class="modal" style="display: {% if show_captcha_modal %}block{% else %}none{% endif %};">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <div class="form-box">
+        <div class="form-value">
+          <div class="page" id="update">
+            <form id="profile-form" method="POST" action="{% url 'update' %}">
+              {% csrf_token %}
+              <div class="inputbox">
+                <input type="text" id="passport_series" name="passport_series"
+                  value="{{ request.user.passport_series }}" required>
+                <label for="passport_series">Серия паспорта:</label>
+              </div>
 
-  <button id="edit-btn">Редактировать профиль</button>
+              <div class="inputbox">
+                <input type="text" id="passport_number" name="passport_number"
+                  value="{{ request.user.passport_number }}" required>
+                <label for="passport_number">Номер паспорта:</label>
+              </div>
 
-  <form id="profile-form" method="POST" action="{% url 'update' %}" style="display:none;">
-    {% csrf_token %}
-    <label for="passport_series">Серия паспорта:</label>
-    <input type="text" id="passport_series" name="passport_series" value="{{ request.user.passport_series }}" required>
+              <div class="inputbox">
+                <input type="text" id="first_name" name="first_name" value="{{ request.user.first_name }}" required>
+                <label for="first_name">Фамилия:</label>
+              </div>
 
-    <label for="passport_number">Номер паспорта:</label>
-    <input type="text" id="passport_number" name="passport_number" value="{{ request.user.passport_number }}" required>
+              <div class="inputbox">
+                <input type="text" id="last_name" name="last_name" value="{{ request.user.last_name }}" required>
+                <label for="last_name">Имя:</label>
+              </div>
 
-    <label for="first_name">Фамилия:</label>
-    <input type="text" id="first_name" name="first_name" value="{{ request.user.first_name }}" required>
+              <div class="inputbox">
+                <input type="text" id="middle_name" name="middle_name" value="{{ request.user.middle_name }}" required>
+                <label for="middle_name">Отчество:</label>
+              </div>
 
-    <label for="last_name">Имя:</label>
-    <input type="text" id="last_name" name="last_name" value="{{ request.user.last_name }}" required>
+              <div class="inputbox">
+                <input type="text" id="phone" name="phone" value="{{ request.user.phone }}" required>
+                <label for="phone">Номер телефона:</label>
+              </div>
 
-    <label for="middle_name">Отчество:</label>
-    <input type="text" id="middle_name" name="middle_name" value="{{ request.user.middle_name }}" required>
-
-    <label for="phone">Номер телефона:</label>
-    <input type="text" id="phone" name="phone" value="{{ request.user.phone }}" required>
-
-    <button type="submit">Сохранить</button>
-  </form>
-
-  <form method="POST" action="{% url 'logout' %}">
-    {% csrf_token %}
-    <button type="submit">Выйти из аккаунта</button>
-  </form>
+              <button type="submit">Сохранить <ion-icon name="save-outline"></ion-icon></button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="button-submit">
+    <form method="POST" action="{% url 'logout' %}">
+      {% csrf_token %}
+      <button type="submit">Выйти из аккаунта</button>
+    </form>
+  </div>
 </div>
-<script>
-  document.getElementById('edit-btn').addEventListener('click', function () {
-    document.getElementById('profile-form').style.display = 'block';
-  });
-</script>
+
+<script src="{% static 'js/profile-update-modal.js' %}" type="module"></script>
 {% endblock %}
