@@ -12,7 +12,6 @@ urlpatterns = [
     path('registering/', views.register_view, name='registering'),
     path('logining/', views.login_view, name='logining'),
     path('captcha/', views.captcha_view, name='captcha'),
-    path('profile/', views.profile_view, name='profile'),
     path('logout/', views.logout_view, name='logout'),
     # path('success/', views.success_page, name='success'),
     

@@ -9,6 +9,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
+    'user_profile',
     'main',
     'captcha',
     'django.contrib.admin',

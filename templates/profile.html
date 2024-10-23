@@ -16,7 +16,7 @@
 
   <button id="edit-btn">Редактировать профиль</button>
 
-  <form id="profile-form" method="POST" action="{% url 'profile_update' %}" style="display:none;">
+  <form id="profile-form" method="POST" action="{% url 'profile/update' %}" style="display:none;">
     {% csrf_token %}
     <label for="passport">Серия и номер паспорта:</label>
     <input type="text" id="passport" name="passport" value="{{ request.user.passport }}" required>
