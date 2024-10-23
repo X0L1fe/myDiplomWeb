@@ -11,15 +11,26 @@
 {% include 'base-menu.html' %}
 <div class="main-content">
   <h1>Профиль пользователя {{ request.user.login }}</h1>
+  <p>Данные вашего профиля:</p>
 
-  <h6>Ваш профиль самый лучший!</h6>
+  <ul>
+    <li><strong>Фамилия:</strong> {{ request.user.first_name|default_if_none:"Не указано" }}</li>
+    <li><strong>Имя:</strong> {{ request.user.last_name|default_if_none:"Не указано" }}</li>
+    <li><strong>Отчество:</strong> {{ request.user.middle_name|default_if_none:"Не указано" }}</li>
+    <li><strong>Серия паспорта:</strong> {{ request.user.passport_series|default_if_none:"Не указано" }}</li>
+    <li><strong>Номер паспорта:</strong> {{ request.user.passport_number|default_if_none:"Не указано" }}</li>
+    <li><strong>Номер телефона:</strong> {{ request.user.phone|default_if_none:"Не указано" }}</li>
+  </ul>
 
   <button id="edit-btn">Редактировать профиль</button>
 
-  <form id="profile-form" method="POST" action="{% url 'profile/update' %}" style="display:none;">
+  <form id="profile-form" method="POST" action="{% url 'update' %}" style="display:none;">
     {% csrf_token %}
-    <label for="passport">Серия и номер паспорта:</label>
-    <input type="text" id="passport" name="passport" value="{{ request.user.passport }}" required>
+    <label for="passport_series">Серия паспорта:</label>
+    <input type="text" id="passport_series" name="passport_series" value="{{ request.user.passport_series }}" required>
+
+    <label for="passport_number">Номер паспорта:</label>
+    <input type="text" id="passport_number" name="passport_number" value="{{ request.user.passport_number }}" required>
 
     <label for="first_name">Фамилия:</label>
     <input type="text" id="first_name" name="first_name" value="{{ request.user.first_name }}" required>
@@ -42,7 +53,7 @@
   </form>
 </div>
 <script>
-  document.getElementById('edit-btn').addEventListener('click', function() {
+  document.getElementById('edit-btn').addEventListener('click', function () {
     document.getElementById('profile-form').style.display = 'block';
   });
 </script>
