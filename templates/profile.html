@@ -16,12 +16,12 @@
   <p>Данные вашего профиля:</p>
 
   <ul>
-    <li><strong>Фамилия:</strong> {{ request.user.first_name|default_if_none:"Не указано" }}</li>
-    <li><strong>Имя:</strong> {{ request.user.last_name|default_if_none:"Не указано" }}</li>
-    <li><strong>Отчество:</strong> {{ request.user.middle_name|default_if_none:"Не указано" }}</li>
-    <li><strong>Серия паспорта:</strong> {{ request.user.passport_series|default_if_none:"Не указано" }}</li>
-    <li><strong>Номер паспорта:</strong> {{ request.user.passport_number|default_if_none:"Не указано" }}</li>
-    <li><strong>Номер телефона:</strong> {{ request.user.phone|default_if_none:"Не указано" }}</li>
+    <li><strong>Фамилия:</strong> {{ request.user.profile.first_name|default_if_none:"Не указано" }}</li>
+    <li><strong>Имя:</strong> {{ request.user.profile.last_name|default_if_none:"Не указано" }}</li>
+    <li><strong>Отчество:</strong> {{ request.user.profile.middle_name|default_if_none:"Не указано" }}</li>
+    <li><strong>Серия паспорта:</strong> {{ request.user.profile.passport_series|default_if_none:"Не указано" }}</li>
+    <li><strong>Номер паспорта:</strong> {{ request.user.profile.passport_number|default_if_none:"Не указано" }}</li>
+    <li><strong>Номер телефона:</strong> {{ request.user.profile.phone|default_if_none:"Не указано" }}</li>
   </ul>
   <div class="button-submit">
     <button id="edit-btn">Редактировать профиль</button>
