@@ -8,7 +8,8 @@ from .forms import *
 from .models import User, UserProfile
 from .serializers import UserProfileSerializer
 from rest_framework import generics
-from rest_framework.permissions import AllowAny#ПОТОМ УБРАТЬ!
+from rest_framework.permissions import IsAdminUser
+from rest_framework.authentication import TokenAuthentication
 import random
 import string
 import os
@@ -16,7 +17,10 @@ import os
 class UserAPI(generics.ListAPIView):
     queryset = UserProfile.objects.all()
     serializer_class = UserProfileSerializer
-    permission_classes = [AllowAny]
+    authentication_classes = [TokenAuthentication]  # Указываем, что используем токен-аутентификацию
+    permission_classes = [IsAdminUser]
+
+
 
 def register(request):
     if request.user.is_authenticated:
